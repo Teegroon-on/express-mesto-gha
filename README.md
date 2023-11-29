@@ -1,16 +1,21 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+[![Tests for sprint 13](https://github.com/novvember/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/novvember/express-mesto-gha/actions/workflows/tests-13-sprint.yml) 
+[![Tests for sprint 14](https://github.com/novvember/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/novvember/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
+# Проект Mesto (бэкенд)
 
+Сервер для проекта Mesto
 
-## Директории
+Выполнен в рамках серии проектных работ в Яндекс.Практикуме по профессии «Веб-разработчик» (от начала изучения бекэнда, спринт 13, и далее).
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+## Возможности
+- проверка токенов
+- регистрация и авторизация пользователей
+- сохранение и выдача карточек
 
-## Запуск проекта
+## Стек технологий
+- Node.js
+- express.js
+- MongoDB
+- Mongoose
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Статус разработки
+*Ведется разработка*
