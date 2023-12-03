@@ -1,7 +1,7 @@
-const { User } = require('../models/user');
-const { handleError } = require('../utils/handleError');
+const { User } = require('../../models/user');
+const { NotFoundError } = require('../../errors');
 
-async function updateAvatar(req, res) {
+async function updateAvatar(req, res, next) {
   try {
     const userId = req.user._id;
     const { avatar } = req.body;
@@ -10,9 +10,14 @@ async function updateAvatar(req, res) {
       { avatar },
       { new: true, runValidators: true },
     );
+
+    if (!user) {
+      throw new NotFoundError('Пользователь не найден');
+    }
+
     res.send(user);
   } catch (err) {
-    handleError(err, req, res);
+    next(err);
   }
 }
 
