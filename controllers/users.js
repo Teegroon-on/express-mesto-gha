@@ -1,18 +1,18 @@
 const bcrypt = require('bcryptjs');
-const jwt = require("jsonwebtoken");
-const {User} = require('../models/user');
+const jwt = require('jsonwebtoken');
+const { User } = require('../models/user');
 const {
   ConflictError,
   ValidationError,
   NotFoundError,
-  UnauthorizedError
+  UnauthorizedError,
 } = require('../utils/errors');
 
 const SALT_LENGTH = 10;
 
 async function createUser(req, res, next) {
   try {
-    const {email, password, name, about, avatar} = req.body;
+    const { email, password, name, about, avatar } = req.body;
     const passwordHash = await bcrypt.hash(password, SALT_LENGTH);
     let user = await User.create({
       email,
@@ -48,7 +48,7 @@ async function getAllUsers(req, res, next) {
 
 async function getUserById(req, res, next) {
   try {
-    const {userId} = req.params;
+    const { userId } = req.params;
     const user = await User.findById(userId);
     if (!user) {
       throw new NotFoundError('Ошибка! Пользователь не найден');
@@ -65,8 +65,8 @@ async function getUserById(req, res, next) {
 
 async function login(req, res, next) {
   try {
-    const {email, password} = req.body;
-    const user = await User.findOne({email}).select('+password');
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       throw new UnauthorizedError('Ошибка! Неверные данные для входа');
     }
@@ -83,7 +83,7 @@ async function login(req, res, next) {
         expiresIn: '7d',
       },
     );
-    res.send({jwt: token});
+    res.send({ jwt: token });
   } catch (err) {
     next(err);
   }
@@ -92,11 +92,11 @@ async function login(req, res, next) {
 async function updateAvatar(req, res, next) {
   try {
     const userId = req.user._id;
-    const {avatar} = req.body;
+    const { avatar } = req.body;
     const user = await User.findByIdAndUpdate(
       userId,
-      {avatar},
-      {new: true, runValidators: true},
+      { avatar },
+      { new: true, runValidators: true },
     );
     if (!user) {
       throw new NotFoundError('Ошибка! Пользователь не найден');
@@ -110,11 +110,11 @@ async function updateAvatar(req, res, next) {
 async function updateUser(req, res, next) {
   try {
     const userId = req.user._id;
-    const {name, about} = req.body;
+    const { name, about } = req.body;
     const user = await User.findByIdAndUpdate(
       userId,
-      {name, about},
-      {new: true, runValidators: true},
+      { name, about },
+      { new: true, runValidators: true },
     );
 
     if (!user) {
@@ -149,5 +149,5 @@ module.exports = {
   login,
   updateAvatar,
   updateUser,
-  getCurrentUser
-}
+  getCurrentUser,
+};

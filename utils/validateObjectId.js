@@ -6,4 +6,4 @@ function validateObjectId(value) {
   throw new Error('Ошибка! Идентификатор не валиден');
 }
 
-module.exports = { validateObjectId }
+module.exports = { validateObjectId };

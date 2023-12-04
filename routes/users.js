@@ -1,12 +1,12 @@
 const express = require('express');
-const {celebrate, Joi} = require('celebrate');
-const {validateObjectId} = require('../utils/validateObjectId');
+const { celebrate, Joi } = require('celebrate');
+const { validateObjectId } = require('../utils/validateObjectId');
 const {
     getAllUsers,
     getUserById,
     updateUser,
     updateAvatar,
-    getCurrentUser
+    getCurrentUser,
 } = require('../controllers/users');
 
 const users = express.Router();
@@ -47,4 +47,4 @@ users.patch(
     updateAvatar,
 );
 
-module.exports = {users};
+module.exports = { users };

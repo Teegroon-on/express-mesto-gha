@@ -1,15 +1,15 @@
-const {Card} = require('../models/card');
+const { Card } = require('../models/card');
 const {
   ValidationError,
   NotFoundError,
-  ForbiddenError
+  ForbiddenError,
 } = require('../utils/errors');
 
 async function createCard(req, res, next) {
   try {
-    const {name, link} = req.body;
+    const { name, link } = req.body;
     const owner = req.user._id;
-    const cardNew = await Card.create({name, link, owner});
+    const cardNew = await Card.create({ name, link, owner });
     res.status(201).send(cardNew);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -22,7 +22,7 @@ async function createCard(req, res, next) {
 
 async function deleteCard(req, res, next) {
   try {
-    const {cardId} = req.params;
+    const { cardId } = req.params;
     const card = await Card.findById(cardId).populate('owner');
     if (!card) {
       throw new NotFoundError('Ошибка! Такая карточка не найдена');
@@ -44,8 +44,8 @@ async function dislikeCard(req, res, next) {
     const userId = req.user._id;
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
-      {$pull: {likes: userId}},
-      {new: true},
+      { $pull: { likes: userId } },
+      { new: true },
     );
     if (!card) {
       throw new NotFoundError('Ошибка! Такая карточка не найдена');
@@ -74,8 +74,8 @@ async function likeCard(req, res, next) {
     const userId = req.user._id;
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
-      {$addToSet: {likes: userId}},
-      {new: true},
+      { $addToSet: { likes: userId } },
+      { new: true },
     );
     if (!card) {
       throw new NotFoundError('Ошибка! Такая карточка не найдена');
@@ -95,5 +95,5 @@ module.exports = {
   deleteCard,
   dislikeCard,
   getAllCards,
-  likeCard
-}
+  likeCard,
+};

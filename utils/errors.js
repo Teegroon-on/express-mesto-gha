@@ -1,3 +1,4 @@
+/* eslint max-classes-per-file: ["error", { ignoreExpressions: true }] */
 class ConflictError extends Error {
   constructor(message) {
     super(message);
@@ -33,4 +34,10 @@ class ValidationError extends Error {
   }
 }
 
-module.exports = {ConflictError, ForbiddenError, NotFoundError, UnauthorizedError, ValidationError};
+module.exports = {
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+  ValidationError,
+};
