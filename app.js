@@ -14,8 +14,8 @@ const DATABASE_URL = 'mongodb://127.0.0.1:27017/mestodb';
 const app = express();
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 минут
-  max: 100, // 100 запросов с одного IP
+  windowMs: 15 * 60 * 1000,
+  max: 100
 });
 
 mongoose
@@ -38,7 +38,7 @@ app.use(routes);
 
 app.use(errorLogger);
 
-app.use(errors()); // обработчик ошибок celebrate
+app.use(errors());
 
 app.use(handleError);
 

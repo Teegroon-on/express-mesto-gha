@@ -1,11 +1,10 @@
 const express = require('express');
 const { celebrate, Joi } = require('celebrate');
-
 const { users } = require('./users');
 const { cards } = require('./cards');
 const { login, createUser } = require('../controllers/users');
 const { auth } = require('../middlewares/auth');
-const { NotFoundError } = require('../errors');
+const { NotFoundError } = require('../utils/errors');
 
 const routes = express.Router();
 

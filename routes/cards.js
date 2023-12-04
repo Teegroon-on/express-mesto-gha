@@ -1,14 +1,12 @@
 const express = require('express');
 const { celebrate, Joi } = require('celebrate');
-
 const { validateObjectId } = require('../utils/validateObjectId');
-
 const {
   getAllCards,
   createCard,
   deleteCard,
-  putLike,
-  deleteLike,
+  likeCard,
+  dislikeCard,
 } = require('../controllers/cards');
 
 const paramsValidationConfig = {
@@ -18,9 +16,7 @@ const paramsValidationConfig = {
 };
 
 const cards = express.Router();
-
 cards.get('/', getAllCards);
-
 cards.post(
   '/',
   celebrate({
@@ -35,9 +31,6 @@ cards.post(
 );
 
 cards.delete('/:cardId', celebrate(paramsValidationConfig), deleteCard);
-
-cards.put('/:cardId/likes', celebrate(paramsValidationConfig), putLike);
-
-cards.delete('/:cardId/likes', celebrate(paramsValidationConfig), deleteLike);
-
+cards.put('/:cardId/likes', celebrate(paramsValidationConfig), likeCard);
+cards.delete('/:cardId/likes', celebrate(paramsValidationConfig), dislikeCard);
 module.exports = { cards };
