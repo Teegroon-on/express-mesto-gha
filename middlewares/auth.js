@@ -12,7 +12,7 @@ function auth(req, res, next) {
     try {
       payload = jwt.verify(token, 'secretkey');
     } catch (err) {
-      throw new UnauthorizedError('Для выполнения действия необходима авторизация');
+      throw new UnauthorizedError('Ошибка! Для выполнения действия необходима авторизация');
     }
     req.user = payload;
     next();
