@@ -4,8 +4,8 @@ const { validateObjectId } = require('../utils/validateObjectId');
 const {
     getAllUsers,
     getUserById,
-    updateUser,
     updateAvatar,
+    updateUser,
     getCurrentUser,
 } = require('../controllers/users');
 

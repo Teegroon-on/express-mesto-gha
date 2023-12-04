@@ -3,7 +3,7 @@ const {
   ValidationError,
   NotFoundError,
   ForbiddenError,
-} = require('../utils/errors');
+} = require('../error-classes');
 
 async function createCard(req, res, next) {
   try {

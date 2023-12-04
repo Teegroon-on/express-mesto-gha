@@ -8,4 +8,4 @@ function handleError(err, req, res, next) {
   res.status(statusCode).send({ message });
 }
 
-module.exports = {handleError};
+module.exports = { handleError };
