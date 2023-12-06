@@ -27,7 +27,7 @@ async function createUser(req, res, next) {
     delete user.password;
     res.status(201).send(user);
   } catch (err) {
-    if (err.name === 'CastError' || err.name === 'ValidationError') {
+    if (err.name === 'ValidationError') {
       next(new ValidationError(`Ошибка! Неверные данные в ${err.path ?? 'запросе'}`));
       return;
     }
@@ -57,7 +57,7 @@ async function getUserById(req, res, next) {
     }
     res.send(user);
   } catch (err) {
-    if (err.name === 'CastError' || err.name === 'ValidationError') {
+    if (err.name === 'CastError') {
       next(new ValidationError(`Ошибка! Неверные данные в ${err.path ?? 'запросе'}`));
       return;
     }
@@ -100,11 +100,12 @@ async function updateAvatar(req, res, next) {
       { avatar },
       { new: true, runValidators: true },
     );
-    if (!user) {
-      throw new NotFoundError('Ошибка! Пользователь не найден');
-    }
     res.send(user);
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      next(new ValidationError('Ошибка! Неверные данные в запросе'));
+      return;
+    }
     next(err);
   }
 }
@@ -118,13 +119,12 @@ async function updateUser(req, res, next) {
       { name, about },
       { new: true, runValidators: true },
     );
-
-    if (!user) {
-      throw new NotFoundError('Пользователь не найден');
-    }
-
     res.send(user);
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      next(new ValidationError('Ошибка! Неверные данные в запросе'));
+      return;
+    }
     next(err);
   }
 }
@@ -133,10 +133,6 @@ async function getCurrentUser(req, res, next) {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId);
-
-    if (!user) {
-      throw new NotFoundError('Пользователь не найден');
-    }
 
     res.send(user);
   } catch (err) {

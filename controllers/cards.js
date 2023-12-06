@@ -21,22 +21,22 @@ async function createCard(req, res, next) {
 }
 
 async function deleteCard(req, res, next) {
-  try {
-    const { cardId } = req.params;
-    const card = await Card.findById(cardId).populate('owner');
-    if (!card) {
-      throw new NotFoundError('Ошибка! Такая карточка не найдена');
-    }
-    const ownerId = card.owner.id;
-    const userId = req.user._id;
-    if (ownerId !== userId) {
-      throw new ForbiddenError('Ошибка! Нельзя удалить чужую карточку');
-    }
-    await Card.findByIdAndRemove(cardId);
-    res.send(card);
-  } catch (err) {
-    next(err);
-  }
+  const { cardId } = req.params;
+  return Card.findById(cardId)
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Ошибка! Такая карточка не найдена');
+      } else if (card.owner.toString() !== req.user._id) {
+        throw new ForbiddenError('Ошибка! Нельзя удалить чужую карточку');
+      }
+      return Card.findByIdAndRemove(cardId).then(() => res.send({ message: 'Карточка успешно удалена' }));
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new ValidationError('Ошибка! Некорректные данные _id'));
+      }
+      next(err);
+    });
 }
 
 async function dislikeCard(req, res, next) {
