@@ -34,6 +34,7 @@ async function deleteCard(req, res, next) {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new ValidationError('Ошибка! Некорректные данные _id'));
+        return;
       }
       next(err);
     });
